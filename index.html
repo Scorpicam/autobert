@@ -1,0 +1,112 @@
+<script>
+
+var adverbs = [
+	"cheerfully", "hastily", "extravagantly", "vilely",
+	"loudly", "proudly", "rapidly", "accidentally",
+	"hungily", "really",
+	];
+var conjunctions = [
+	"and", "but", "or", "as if",
+	"while", "though", "after", "except",
+	];
+var names = [
+	"Bert", "Ron", "Taylor", "Jake",
+	"Dom", "Harrison", "Big Cheese", "Henry",
+	"Dylan", "Dane", "Braeden", "Cody",
+	"Camden", "Matt Kelso", "Matt Payne", "Stephen",
+	];
+var prepositions = [
+	"before", "under", "at", "beneath",
+	"above", "inside", "among", "around",
+	"toward", "through", "during", "past",
+	"despite",
+	];
+var nouns = [
+	"sight", "sound", "sensation", "burn",
+	"tingling", "hearbeat", "dong", "ass",
+	"water (or lack thereof)", "TTR",
+	];
+var verbs_present = [
+	"wink", "smirks", "cum", "eat",
+	"stare", "smile", "weep", "gasp",
+	"drool",
+	];
+var verbs_infinitive = [
+	"winking", "smirking", "cumming", "eating",
+	"staring", "smiling", "drooling", "licking",
+	];
+var verbs_past = [
+	"winked", "smirked", "came", "drooled",
+	"licked", "ate", "sucked", "stared",
+	"smiled", "gasped", "made love",
+	];
+
+function randomElement(array)
+{
+	return array[Math.floor(Math.random() * array.length)];
+}
+
+function gen()
+{
+	var skeleton = document.getElementById('skeleton').value.split(' ');
+	var story = "";
+	var i;
+
+	for (var j = 0; j < skeleton.length; j++) {
+		i = skeleton[j];
+
+		if (/ADVERB/.test(i))
+			story += randomElement(adverbs);
+		else if (/CONJUNCTION/.test(i))
+			story += randomElement(conjunctions);
+		else if (/NAME/.test(i))
+			story += randomElement(names);
+		else if (/PREPOSITION/.test(i))
+			story += randomElement(prepositions);
+		else if (/NOUN/.test(i))
+			story += randomElement(nouns);
+		else if (/PRESENT/.test(i))
+			story += randomElement(verbs_present);
+		else if (/INFINITIVE/.test(i))
+			story += randomElement(verbs_infinitive);
+		else if (/PAST|VERB/.test(i))
+			story += randomElement(verbs_past);
+		else
+			story += i;
+
+		if (i.includes('.'))
+			story += '.';
+		if (i.includes(','))
+			story += ',';
+		if (i.includes('!'))
+			story += '!';
+		if (i.includes('?'))
+			story += '?';
+		if (i.includes(';'))
+			story += ';';
+		if (i.includes('\'s'))
+			story += '\'s';
+
+		story += " ";
+	}
+
+	story = story.replace(/[.][.]/g, '.');
+	story = story.replace(/[,][,]/g, ',');
+	story = story.replace(/[!][!]/g, '!');
+	story = story.replace(/[?][?]/g, '?');
+	story = story.replace(/[;][;]/g, ';');
+	story = story.replace(/['][s]{2}/g, '\'s');
+
+	document.getElementById('story').innerHTML = story;
+}
+
+</script>
+
+<h1>AutoBert</h1>
+<p id="story"></p>
+<button onclick="gen()">Generate</button>
+
+<hr/>
+
+<h2>Advanced</h2>
+<textarea id="skeleton">NAME ADVERB VERB PREPOSITION the NOUN of NAME INFINITIVE CONJUNCTION INFINITIVE.  The NOUN made NAME PRESENT PREPOSITION NAME 's NOUN.</textarea>
